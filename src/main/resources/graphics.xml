@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util">
+
+    <bean id="mainProcess" class="net.tompy.gameai.ProcessGameImpl">
+        <property name="myGame" ref="${my.game}" />
+    </bean>
+    
+    <bean id="ggt" class="net.tompy.ggt.game.GameGraphicsImpl">
+    </bean>
+    
+    <bean id="stateFactory" class="net.tompy.gameai.fsm.StateFactory">
+        <property name="stateMap" ref="${game.state.map}" />
+    </bean>
+    
+    <util:map id="ggtStates">
+        <!-- Game States -->
+        <entry key="gameInit">
+            <bean class="net.tompy.ggt.game.StateGameGraphicsInitializeImpl" >
+                <property name="wonderAssignment" ref="${wonder.assignment}" />
+            </bean>
+        </entry>
+    </util:map>
+    
+    <bean id="gameControl" class="net.tompy.ggt.game.GamePlayController" />
+    
+    <bean id="fsmGameCreator" class="net.tompy.ggt.game.FSMCreatorGameImpl" />
+    
+    
+    <!-- Property Placeholder Configurer -->
+    <bean id="placeholderConfig" class="net.tompy.common.ArgumentListPropertyConfigurer" />
+    
+</beans>
